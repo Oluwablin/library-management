@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -19,21 +20,71 @@ class LibrarySeeder extends Seeder
 
         DB::table('libraries')->truncate();
 
-        $libraries = array(
+        $libraries = [
 
             // Libraries
-            array('id' => 1, 'name' => 'John Doe'),
-            array('id' => 2, 'name' => 'Ilesanmi'),
-            array('id' => 3, 'name' => 'Yoodule'),
-            array('id' => 4, 'name' => 'Neo'),
-            array('id' => 5, 'name' => 'Union'),
-            array('id' => 6, 'name' => 'Gasline'),
-            array('id' => 7, 'name' => 'Glory'),
-            array('id' => 8, 'name' => 'Lorem Ipsum'),
-            array('id' => 9, 'name' => 'Generous'),
-            array('id' => 10, 'name' => 'Wonderful'),
+            [
+                'id' => 1,
+                'name' => 'John Doe',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 2,
+                'name' => 'Ilesanmi',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 3,
+                'name' => 'Yoodule',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 4,
+                'name' => 'Neo',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 5,
+                'name' => 'Union',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 6,
+                'name' => 'Gasline',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 7,
+                'name' => 'Glory',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 8,
+                'name' => 'Lorem Ipsum',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 9,
+                'name' => 'Generous',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 10,
+                'name' => 'Wonderful',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
 
-        );
+        ];
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
