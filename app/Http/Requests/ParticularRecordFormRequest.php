@@ -29,7 +29,6 @@ class ParticularRecordFormRequest extends FormRequest
         return [
             'title' => [$rule, 'string', 'max:250'],
             'description' => ['nullable', 'string', 'max:250'],
-            'library_id' => Auth::user()->getLibraryID()
         ];
     }
 

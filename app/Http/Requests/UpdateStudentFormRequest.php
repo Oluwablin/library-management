@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Library;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class UpdateStudentFormRequest extends FormRequest
 {
@@ -29,7 +30,7 @@ class UpdateStudentFormRequest extends FormRequest
         return [
             'first_name' => ['sometimes', 'string', 'max:50'],
             'last_name' => ['sometimes', 'string', 'max:50'],
-            'email' => ['unique:users,email_address,'.Auth::user()->id],
+            'email' => [Rule::unique('users')->ignore($this->id)],
             'library_id' => ['sometimes', 'numeric',
                 function ($attribute, $value, $fail) {
                     if (!Library::find($value) instanceof Library) {

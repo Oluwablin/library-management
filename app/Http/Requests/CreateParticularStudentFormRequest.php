@@ -31,7 +31,6 @@ class CreateParticularStudentFormRequest extends FormRequest
             'last_name' => ['nullable', 'string', 'max:50'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', Password::min(8)->letters()->mixedCase()->numbers()->symbols()],
-            'library_id' => Auth::user()->getLibraryID()
         ];
     }
 

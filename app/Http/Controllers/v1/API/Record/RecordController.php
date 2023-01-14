@@ -71,7 +71,7 @@ class RecordController extends Controller
      */
     public function addParticularRecord(ParticularRecordFormRequest $request)
     {
-        $record = Record::create($request->validated());
+        $record = Record::create(['title' => $request->validated()['title'], 'description' => $request->validated()['description'] , 'library_id'=> Auth::user()->getLibraryID()]);
 
         return $this->AppResponse('OK', 'Record created successfully.', 201, new RecordResource($record));
     }
@@ -87,7 +87,7 @@ class RecordController extends Controller
     {
         $record = $this->listParticularRecord($id);
 
-        $record->update($request->validated());
+        $record->update(['title' => $request->validated()['title'], 'description' => $request->validated()['description'] , 'library_id'=> Auth::user()->getLibraryID()]);
 
         return $this->AppResponse('OK', 'Record updated successfully.', 200, new RecordResource($record));
     }

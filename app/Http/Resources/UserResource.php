@@ -21,7 +21,6 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'last_login_at' => $this->last_login_at?->toDayDateTimeString(),
             'is_active' => ($this->is_active) ? true : false,
-            'avatar' => $this->avatar,
             'email_verified' => ($this->email_verified_at) ? true : false,
             'library' => new LibraryResource($this->library),
             'roles' => RoleResource::collection($this->roles),

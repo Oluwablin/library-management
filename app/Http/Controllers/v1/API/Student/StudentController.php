@@ -73,7 +73,13 @@ class StudentController extends Controller
      */
     public function addParticularStudent(CreateParticularStudentFormRequest $request)
     {
-        $student = User::create($request->validated());
+        $student = User::create([
+            'first_name' => $request->validated()['first_name'], 
+            'last_name' => $request->validated()['last_name'] , 
+            'email' => $request->validated()['email'], 
+            'password' => $request->validated()['password'] ,
+            'library_id'=> Auth::user()->getLibraryID()
+        ]);
 
         return $this->AppResponse('OK', 'Student created successfully.', 201, new StudentResource($student));
     }
@@ -89,7 +95,15 @@ class StudentController extends Controller
     {
         $student = $this->listParticularStudent($id);
 
-        $student->update($request->validated());
+        $student->update([
+            'first_name' => $request->validated()['first_name'], 
+            'last_name' => $request->validated()['last_name'] , 
+            'library_id'=> Auth::user()->getLibraryID()
+        ]);
+        if($request->validated(['email'])){
+            $student->email = $request->validated()['email'];
+            $student->save();
+        }
 
         return $this->AppResponse('OK', 'Student updated successfully.', 200, new StudentResource($student));
     }
