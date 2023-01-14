@@ -84,13 +84,9 @@ Route::prefix('v1')->group(function () {
             Route::delete('/{id}', 'deleteParticularRecord')->name('delete-particular-one');
         });
 
-        // Library endpoints
-        Route::prefix('libraries')->name('libraries.')->controller(LibraryController::class)->group(function () {
-            Route::get('/{id}', 'getParticularLibrary')->name('get-particular-one');
-        });
-
         // Student endpoints
         Route::prefix('students')->name('students.')->controller(StudentController::class)->group(function () {
+            Route::get('/{id}', 'getParticularStudent')->name('get-particular-one');
             Route::get('/', 'getAllLibraryStudents')->name('get-all-students');
             Route::post('/', 'addParticularStudent')->name('add-particular-one');
             Route::put('/{id}', 'updateParticularStudent')->name('update-particular-one');

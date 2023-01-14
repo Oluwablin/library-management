@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\v1\API\Record;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateParticularRecordFormRequest;
+use App\Http\Requests\UpdateParticularRecordFormRequest;
 use App\Http\Resources\RecordResource;
 use App\Models\Record;
 use App\Oluwablin\OluwablinApp;
@@ -14,7 +16,7 @@ class RecordController extends Controller
     use OluwablinApp;
 
     /**
-     * Get record to interact with
+     * Get particular record to interact with
      *
      * @param int $id
      *
@@ -26,7 +28,7 @@ class RecordController extends Controller
     } 
 
     /**
-     * Get particular record to interact with
+     * Get record to interact with
      *
      * @param int $id
      *
@@ -46,5 +48,62 @@ class RecordController extends Controller
     public function getParticularRecord($id)
     {
         return $this->AppResponse('OK', 'Record details fetched successfully', 200, new RecordResource($this->listParticularRecord($id)));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAllLibraryRecords(Request $request)
+    {
+        $records = Record::where('library_id', Auth::user()->getLibraryID())
+        ->latest()->paginate(intVal($request->query('paginate')) ?? 10);
+
+        return RecordResource::collection($records)->additional(['status' => 'OK', 'message' => 'Records fetched successfully.']);
+    }
+
+     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  CreateParticularRecordFormRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function addParticularRecord(CreateParticularRecordFormRequest $request)
+    {
+        $record = Record::create($request->validated());
+
+        return $this->AppResponse('OK', 'Record created successfully.', 201, new RecordResource($record));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  UpdateParticularRecordFormRequest  $request
+     * @param  \App\Models\Record  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateParticularRecord(UpdateParticularRecordFormRequest $request, $id)
+    {
+        $record = $this->listParticularRecord($id);
+
+        $record->update($request->validated());
+
+        return $this->AppResponse('OK', 'Record updated successfully.', 200, new RecordResource($record));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Record  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteParticularRecord($id)
+    {
+        $record = $this->listParticularRecord($id);
+
+        $record->delete();
+
+        return $this->AppResponse('OK', 'Record deleted successfully');
     }
 }
