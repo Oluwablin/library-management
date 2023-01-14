@@ -56,4 +56,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Library::class, 'library_id', 'id');
     }
+
+    /**
+     * Get library_id where a user belongs to
+     *
+     * @return Library
+     */
+    public function getLibraryID()
+    {
+        return $this->library->id;
+    }
 }

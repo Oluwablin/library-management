@@ -74,11 +74,10 @@ Route::prefix('v1')->group(function () {
     */
 
     // All routes for authenticated admins should go down here under this group
-    Route::prefix('admin')->middleware(['auth:sanctum', 'role:Admin'])->group(function () {
+    Route::prefix('admin')->middleware(['auth:sanctum', 'role:SuperAdmin,Admin'])->group(function () {
 
         // Record endpoints
         Route::prefix('records')->name('records.')->controller(RecordController::class)->group(function () {
-            Route::get('/{id}', 'getParticularRecord')->name('get-particular-one');
             Route::get('/', 'getAllLibraryRecords')->name('get-all-records');
             Route::post('/', 'addParticularRecord')->name('add-particular-one');
             Route::put('/{id}', 'updateParticularRecord')->name('update-particular-one');
@@ -92,7 +91,6 @@ Route::prefix('v1')->group(function () {
 
         // Student endpoints
         Route::prefix('students')->name('students.')->controller(StudentController::class)->group(function () {
-            Route::get('/{id}', 'getParticularStudent')->name('get-particular-one');
             Route::get('/', 'getAllLibraryStudents')->name('get-all-students');
             Route::post('/', 'addParticularStudent')->name('add-particular-one');
             Route::put('/{id}', 'updateParticularStudent')->name('update-particular-one');
@@ -108,7 +106,7 @@ Route::prefix('v1')->group(function () {
     */
 
     // All routes for authenticated students should go down here under this group
-    Route::prefix('student')->middleware(['auth:sanctum', 'role:Student'])->group(function () {
+    Route::prefix('student')->middleware(['auth:sanctum', 'role:SuperAdmin,Admin,Student'])->group(function () {
 
         // Record endpoints
         Route::prefix('records')->name('records.')->controller(RecordController::class)->group(function () {
