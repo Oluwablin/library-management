@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateParticularStudentFormRequest extends FormRequest
+class ParticularRecordFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,18 +17,18 @@ class UpdateParticularStudentFormRequest extends FormRequest
         return true;
     }
 
-    
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function rules()
     {
+        $rule = request()->isMethod('put')? 'sometimes' : 'required';
+
         return [
-            'first_name' => ['sometimes', 'string', 'max:50'],
-            'last_name' => ['sometimes', 'string', 'max:50'],
-            'email' => ['unique:users,email_address,'.Auth::user()->id],
+            'title' => [$rule, 'string', 'max:250'],
+            'description' => ['nullable', 'string', 'max:250'],
             'library_id' => Auth::user()->getLibraryID()
         ];
     }
@@ -41,7 +41,9 @@ class UpdateParticularStudentFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.unique' => 'Oh sorry, there is an existing account with this email adddress.',
+            'title.required' => 'Please give the Record a title',
+            'title.max' => 'Record title must not exceed 250 characters',
+            'description.max' => 'Record description must not exceed 250 characters',
         ];
     }
 }

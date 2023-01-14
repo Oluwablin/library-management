@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\v1\API\Library;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateLibraryFormRequest;
-use App\Http\Requests\UpdateLibraryFormRequest;
+use App\Http\Requests\LibraryFormRequest;
 use App\Http\Resources\LibraryResource;
 use App\Models\Library;
 use App\Oluwablin\OluwablinApp;
@@ -76,10 +75,10 @@ class LibraryController extends Controller
      /**
      * Store a newly created resource in storage.
      *
-     * @param  CreateLibraryFormRequest $request
+     * @param  LibraryFormRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function addNewLibrary(CreateLibraryFormRequest $request)
+    public function addNewLibrary(LibraryFormRequest $request)
     {
         $library = Library::create($request->validated());
 
@@ -89,11 +88,11 @@ class LibraryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateLibraryFormRequest  $request
+     * @param  LibraryFormRequest  $request
      * @param  \App\Models\Library  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateLibrary(UpdateLibraryFormRequest $request, $id)
+    public function updateLibrary(LibraryFormRequest $request, $id)
     {
         $library = $this->listLibrary($id);
 

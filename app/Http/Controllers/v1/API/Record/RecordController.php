@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\v1\API\Record;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateParticularRecordFormRequest;
-use App\Http\Requests\CreateRecordFormRequest;
-use App\Http\Requests\UpdateParticularRecordFormRequest;
-use App\Http\Requests\UpdateRecordFormRequest;
+use App\Http\Requests\ParticularRecordFormRequest;
+use App\Http\Requests\RecordFormRequest;
 use App\Http\Resources\RecordResource;
 use App\Models\Record;
 use App\Oluwablin\OluwablinApp;
@@ -68,10 +66,10 @@ class RecordController extends Controller
      /**
      * Store a newly created resource in storage.
      *
-     * @param  CreateParticularRecordFormRequest $request
+     * @param  ParticularRecordFormRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function addParticularRecord(CreateParticularRecordFormRequest $request)
+    public function addParticularRecord(ParticularRecordFormRequest $request)
     {
         $record = Record::create($request->validated());
 
@@ -81,11 +79,11 @@ class RecordController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateParticularRecordFormRequest  $request
+     * @param  ParticularRecordFormRequest  $request
      * @param  \App\Models\Record  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateParticularRecord(UpdateParticularRecordFormRequest $request, $id)
+    public function updateParticularRecord(ParticularRecordFormRequest $request, $id)
     {
         $record = $this->listParticularRecord($id);
 
@@ -135,10 +133,10 @@ class RecordController extends Controller
      /**
      * Store a newly created resource in storage.
      *
-     * @param  CreateRecordFormRequest $request
+     * @param  RecordFormRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function addNewRecord(CreateRecordFormRequest $request)
+    public function addNewRecord(RecordFormRequest $request)
     {
         $record = Record::create($request->validated());
 
@@ -148,11 +146,11 @@ class RecordController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateRecordFormRequest  $request
+     * @param  RecordFormRequest  $request
      * @param  \App\Models\Record  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateRecord(UpdateRecordFormRequest $request, $id)
+    public function updateRecord(RecordFormRequest $request, $id)
     {
         $record = $this->listRecord($id);
 
