@@ -4,7 +4,9 @@ namespace App\Http\Controllers\v1\API\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateParticularStudentFormRequest;
+use App\Http\Requests\CreateStudentFormRequest;
 use App\Http\Requests\UpdateParticularStudentFormRequest;
+use App\Http\Requests\UpdateStudentFormRequest;
 use App\Http\Resources\StudentResource;
 use App\Models\User;
 use App\Oluwablin\OluwablinApp;
@@ -89,7 +91,7 @@ class StudentController extends Controller
 
         $student->update($request->validated());
 
-        return $this->AppResponse('OK', 'Record updated successfully.', 200, new StudentResource($student));
+        return $this->AppResponse('OK', 'Student updated successfully.', 200, new StudentResource($student));
     }
 
     /**
@@ -101,6 +103,73 @@ class StudentController extends Controller
     public function deleteParticularStudent($id)
     {
         $student = $this->listParticularStudent($id);
+
+        $student->delete();
+
+        return $this->AppResponse('OK', 'Student deleted successfully');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\User  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getStudent($id)
+    {
+        return $this->AppResponse('OK', 'Student details fetched successfully', 200, new StudentResource($this->listStudent($id)));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAllStudents(Request $request)
+    {
+        $students = User::latest()->paginate(intVal($request->query('paginate')) ?? 10);
+
+        return StudentResource::collection($students)->additional(['status' => 'OK', 'message' => 'Students fetched successfully.']);
+    }
+
+     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  CreateStudentFormRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function addNewStudent(CreateStudentFormRequest $request)
+    {
+        $student = User::create($request->validated());
+
+        return $this->AppResponse('OK', 'Student created successfully.', 201, new StudentResource($student));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  UpdateStudentFormRequest  $request
+     * @param  \App\Models\User  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateStudent(UpdateStudentFormRequest $request, $id)
+    {
+        $student = $this->listStudent($id);
+
+        $student->update($request->validated());
+
+        return $this->AppResponse('OK', 'Student updated successfully.', 200, new StudentResource($student));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\User  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteStudent($id)
+    {
+        $student = $this->listStudent($id);
 
         $student->delete();
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\v1\API\Library;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateLibraryFormRequest;
+use App\Http\Requests\UpdateLibraryFormRequest;
 use App\Http\Resources\LibraryResource;
 use App\Models\Library;
 use App\Oluwablin\OluwablinApp;
@@ -46,5 +48,72 @@ class LibraryController extends Controller
     public function getParticularLibrary($id)
     {
         return $this->AppResponse('OK', 'Library details fetched successfully', 200, new LibraryResource($this->listParticularLibrary($id)));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Library  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getLibrary($id)
+    {
+        return $this->AppResponse('OK', 'Library details fetched successfully', 200, new LibraryResource($this->listLibrary($id)));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAllLibraries(Request $request)
+    {
+        $libraries = Library::latest()->paginate(intVal($request->query('paginate')) ?? 10);
+
+        return LibraryResource::collection($libraries)->additional(['status' => 'OK', 'message' => 'Libraries fetched successfully.']);
+    }
+
+     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  CreateLibraryFormRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function addNewLibrary(CreateLibraryFormRequest $request)
+    {
+        $library = Library::create($request->validated());
+
+        return $this->AppResponse('OK', 'Library created successfully.', 201, new LibraryResource($library));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  UpdateLibraryFormRequest  $request
+     * @param  \App\Models\Library  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateLibrary(UpdateLibraryFormRequest $request, $id)
+    {
+        $library = $this->listLibrary($id);
+
+        $library->update($request->validated());
+
+        return $this->AppResponse('OK', 'Library updated successfully.', 200, new LibraryResource($library));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Library  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteLibrary($id)
+    {
+        $library = $this->listLibrary($id);
+
+        $library->delete();
+
+        return $this->AppResponse('OK', 'Library deleted successfully');
     }
 }
