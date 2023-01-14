@@ -79,6 +79,7 @@ Route::prefix('v1')->group(function () {
         // Record endpoints
         Route::prefix('records')->name('records.')->controller(RecordController::class)->group(function () {
             Route::get('/{id}', 'getParticularRecord')->name('get-particular-one');
+            Route::get('/', 'getAllLibraryRecords')->name('get-all-records');
             Route::post('/', 'addParticularRecord')->name('add-particular-one');
             Route::put('/{id}', 'updateParticularRecord')->name('update-particular-one');
             Route::delete('/{id}', 'deleteParticularRecord')->name('delete-particular-one');
@@ -92,6 +93,7 @@ Route::prefix('v1')->group(function () {
         // Student endpoints
         Route::prefix('students')->name('students.')->controller(StudentController::class)->group(function () {
             Route::get('/{id}', 'getParticularStudent')->name('get-particular-one');
+            Route::get('/', 'getAllLibraryStudents')->name('get-all-students');
             Route::post('/', 'addParticularStudent')->name('add-particular-one');
             Route::put('/{id}', 'updateParticularStudent')->name('update-particular-one');
             Route::delete('/{id}', 'deleteParticularStudent')->name('delete-particular-one');

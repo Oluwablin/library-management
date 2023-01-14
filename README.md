@@ -2,7 +2,7 @@
 
 ## Project Description
 
-This aplication is about RESTful APIs for an Admin Panel to manage usere activities.
+This aplication is about RESTful APIs for a single database multi-tenant Library Management Board.
 
 This includes the following:
 
@@ -12,13 +12,26 @@ This includes the following:
 • Delete a record
 • List all record
 • View all libraries
+• Create library
+• Edit a library
+• Delete a library
+• Create student or user
+• Edit a student or user
+• Delete a student or user
+• List all students or users
+
 ### Admin View
-• Create new tenant/user
-• List all records
+• Create new tenant/user in same library
+• Update a tenant/user in same library
+• Delete a tenant/user in same library
+• List all tenants/users in same library
+• List all records in same library
+• View a record in same library
+• View a library
 
 ### User Panel
-• View record
-• View library
+• View a record
+• View a library
 
 ## Project Setup
 
